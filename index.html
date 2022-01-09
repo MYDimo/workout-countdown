@@ -4,12 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="stylesheet" href="css/normalize.css">
-    <script src="js/app.js" async></script>
-    <title>Workout Countdown</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
+    <div id="inputs">
+        <input type="number" name="" id="roundsInput" placeholder="Rounds" min="0">
+        <input type="number" name="" id="workInput" placeholder="Work"step="5" min="0">
+        <input type="number" name="" id="restInput" placeholder="Rest" step="5" min="0">
+        <button id="start">Start</button>
+    </div>
+    <div id="countdown" class="hide">
+        <p>Round:<span id="roundsOutput">1</span></p>
+        <p><span id="workOutput"></span></p>
+        <button id="reset">Reset</button>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
