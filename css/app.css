@@ -1,3 +1,9 @@
 .hide {
     visibility: hidden;
 }
+
+#countdownOutput {
+    margin: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+}

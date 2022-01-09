@@ -1,78 +1,63 @@
-// Get DOM elements
-const roundsInput = document.querySelector('#roundsInput');
-const workInput = document.querySelector('#workInput');
-const restInput = document.querySelector('#restInput');
-const start = document.querySelector('#start');
-const reset = document.querySelector('#reset');
+var timerEl = document.getElementById("countdownOutput");
+const pauseEl = document.querySelector("#pause");
 
-const inputs = document.querySelector("#inputs");
-const countdown = document.querySelector('#countdown');
-const roundsOutput = document.querySelector("#roundsOutput");
-const minutesOutput = document.querySelector("#minutesOutput");
-const secondsOutput = document.querySelector("#secondsOutput");
+var startTime = Date.now();
+var countDownAmount = 60000; // ms (3603000)
+var countDownEnd = startTime + countDownAmount;
+var tickAudio = new Audio('sounds/beep-01a.mp3');
+var lastSeconds;
 
-//V2
-start.addEventListener('click', () => {
+function formatTime(hours, minutes, seconds, mseconds) {
+    hours = String(hours);
+    minutes = String(minutes);
+    seconds = String(seconds);
+    mseconds = String(mseconds);
 
-    
-    function play(audio_path, time_in_milisec){
-        let beep = new Audio( audio_path);
-        beep.loop = true;
-        beep.play();
-        setTimeout(() => { beep.pause(); }, time_in_milisec);
+    while (mseconds.length < 3) {
+        mseconds = "0" + mseconds;
     }
+    seconds = (seconds.length < 2) ? "0" + seconds : seconds;
+    minutes = (minutes.length < 2) ? "0" + minutes : minutes;
+    return hours + "h  " + minutes + "m  " + seconds + "s  " + mseconds + "ms";
+}
 
-    function countDowner(seconds, workTarget) {
-        let sec = seconds;
+let myReq;
+let isPaused = false;
+
+function updateTimer() {
+    var remainingTime = countDownEnd - Date.now();
+    var hours = Math.floor(remainingTime / (60 * 60 * 1000));
+    var minutes = Math.floor(remainingTime / (60 * 1000)) % 60;
+    var seconds = Math.floor(remainingTime / 1000) % 60;
+    var mseconds = remainingTime % 1000;
+
+    if(lastSeconds && lastSeconds !== seconds && !hours && !minutes && seconds <= 10) {
+        // tickAudio.play();
+    }
+    lastSeconds = seconds;
     
-    
-        let timer = setInterval(() => {;
-            sec--
-            workTarget.textContent = `${(sec<10) ? '0' : ''}${sec}s`;
-            // if (sec <= 2) {
-            //     play('/sounds/beep-01a.mp3', 300);
-            // }
-            if (sec == 0) {
-                clearInterval(timer);
-            }
-        }, 1000);
-    
+    if (remainingTime < 0) {
+        hours = 0;
+        minutes = 0;
+        seconds = 0;
+        mseconds = 0;
+    }
+    else {
+        myReq = requestAnimationFrame(updateTimer);
     }
     
-    function roundDowner(roundCounter, roundTarget) {
-        roundTarget.textContent = roundCounter;
-        console.log(roundCounter);    
-    }
-
+    // printout
+    timerEl.innerHTML = formatTime(hours, minutes, seconds, mseconds);
+}
     
-    if(!roundsInput.value || !workInput.value || !restInput.value) {
-        return;
+updateTimer();
+
+pauseEl.addEventListener('click', () => {
+    if (!isPaused) {
+        isPaused = true;
+        cancelAnimationFrame(myReq)
+    } else {
+        isPaused = false
+        updateTimer();
     }
-    countdown.classList.toggle("hide");
-    inputs.classList.toggle("hide");
-    workOutput.textContent = `${(workInput.value<10) ? '0' : ''}${workInput.value}s`
-
-
-    let roundsCounter = parseInt(roundsInput.value, 10);
-    let workCounter  = parseInt(workInput.value, 10);
-    let restCounter = parseInt(restInput.value, 10);
-
-    let workSetter = -1000;
-    let restSetter = workCounter*1000;
-
-    for (let i = 0; i < roundsCounter; i++) {
-        let additionalSec1 = (i > 0) ? 1 : 0;
-        
-        //add if statement when the input is 0
-        setTimeout(() => {countDowner(workCounter + additionalSec1, workOutput)},workSetter);
-        setTimeout(() => {countDowner(restCounter + 1, workOutput)},restSetter);
-        setTimeout(() => {roundDowner(i+1, roundsOutput)},restSetter-workCounter*1000);
-
-        workSetter = workSetter+((workCounter+restCounter+2)*1000);
-        restSetter = restSetter+((workCounter+restCounter+2)*1000);   
-    }
-})
-
-reset.addEventListener('click', () => {
-    location.reload(); 
 })

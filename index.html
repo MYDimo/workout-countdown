@@ -4,21 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Workout timer v2</title>
+    <link rel="stylesheet" href="css/app.css">
+    <script src="js/app.js" async></script>
 </head>
 <body>
-    <div id="inputs">
-        <input type="number" name="" id="roundsInput" placeholder="Rounds" min="0">
-        <input type="number" name="" id="workInput" placeholder="Work"step="5" min="0">
-        <input type="number" name="" id="restInput" placeholder="Rest" step="5" min="0">
-        <button id="start">Start</button>
-    </div>
-    <div id="countdown" class="hide">
-        <p>Round:<span id="roundsOutput">1</span></p>
-        <p><span id="workOutput"></span></p>
-        <button id="reset">Reset</button>
-    </div>
-    <script src="script.js"></script>
+    <input type="number" name="" id="rounds" placeholder="rounds">
+    <input type="number" name="" id="workTime" placeholder="work">
+    <input type="number" name="" id="restTime" placeholder="rest">
+    <button id="start">Start</button>
+    <button id="pause">Pause</button>
+    <button id="reset">Reset</button>
+    <div id="countdownOutput">00:00</div>
 </body>
 </html>
