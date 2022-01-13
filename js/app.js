@@ -5,12 +5,13 @@ const resetEl = document.querySelector("#resetBtn");
 const roundsEl = document.querySelector("#rounds");
 const workTimeEl = document.querySelector("#workTime");
 const restTimeEl = document.querySelector("#restTime");
+let theTime = document.querySelector("#theTime");
 
 
 let startTime;
-let rounds; // ms (3603000)
-let workTime; // ms (3603000)
-let restTime; // ms (3603000)
+let rounds;
+let workTime;
+let restTime;
 let countDownEnd;
 let tickAudio = new Audio('sounds/beep-01a.mp3');
 let lastSeconds;
@@ -102,3 +103,15 @@ resetEl.addEventListener('click', () => {
     cancelAnimationFrame(myReq)
     timerEl.innerHTML = formatTime(0, 0, 0, 0)
 })
+
+function currentTime() {
+    let time = new Date()
+    let clockH = (time.getHours()).toString()
+    let clockM = (time.getMinutes()).toString()
+    let clockS = (time.getSeconds()).toString()
+    requestAnimationFrame(currentTime)
+
+    theTime.innerHTML = clockH.padStart(2, 0) + ':' + clockM.padStart(2, 0) + ':' + clockS.padStart(2, 0)
+} 
+
+currentTime()
