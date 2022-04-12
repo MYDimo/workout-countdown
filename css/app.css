@@ -7,3 +7,16 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 20px;
 }
+
+nav {
+    width: 200px;
+}
+
+ul {
+    display: flex;
+    justify-content: space-around;
+}
+
+li {
+    list-style: none;
+}
